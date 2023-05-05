@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <VBox layoutX="100.0" layoutY="34.0" prefHeight="206.0" prefWidth="374.0">
+      <VBox layoutX="100.0" layoutY="71.0" prefHeight="169.0" prefWidth="374.0">
          <children>
             <GridPane prefHeight="87.0" prefWidth="547.0">
               <columnConstraints>
@@ -48,5 +48,6 @@
             </HBox>
          </children>
       </VBox>
+      <Label fx:id="titleLbl" layoutX="100.0" layoutY="25.0" text="Inventory Management Program" />
    </children>
 </AnchorPane>

@@ -44,7 +44,7 @@
                   <TextField fx:id="postalCodeTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField fx:id="phoneNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <ComboBox fx:id="comboCountry" onAction="#onComboBox1" prefHeight="25.0" prefWidth="227.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="comboCity" onAction="#comboBox2" prefHeight="25.0" prefWidth="226.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="comboCity" prefHeight="25.0" prefWidth="226.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
             <HBox alignment="TOP_RIGHT" prefHeight="69.0" prefWidth="346.0" spacing="10.0">

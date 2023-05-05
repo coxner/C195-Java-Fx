@@ -1,6 +1,8 @@
 package controller;
 
+import helper.CountryQuery;
 import helper.CustomerQuery;
+import helper.FirstLevelDivisionQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,15 +14,15 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
-import model.Error;
 import model.FirstLevelDivision;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UpdateCustomer implements Initializable {
+public class UpdateCustomerController implements Initializable {
     Stage stage;
     Parent scene;
     public TextField IdTextField;
@@ -33,34 +35,36 @@ public class UpdateCustomer implements Initializable {
     Customer customerToUpdate;
     FirstLevelDivision fldUser;
     Country countrySelected;
-    ObservableList<Country> allCountries = Country.getAllCountries();
-    ObservableList<FirstLevelDivision> allFirstLevelDivision = FirstLevelDivision.getAllFirstLvlDiv();
     ObservableList<FirstLevelDivision> dataForCountry = FXCollections.observableArrayList();
     ObservableList<Country> comboCountrySelection = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         customerToUpdate = MainController.getCustomerToUpdate();
-        comboCountry.setItems(allCountries);
-        fldUser = FirstLevelDivision.getFirstLevelById(customerToUpdate.getDivisionId());
+        try {
+            comboCountry.setItems(CountryQuery.getCountryFromDB());
+            fldUser = FirstLevelDivision.getFirstLevelById(customerToUpdate.getDivisionId());
+            comboCountry.setValue(Country.getCountryById(fldUser));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         IdTextField.setText(String.valueOf(customerToUpdate.getId()));
         nameTextField.setText(customerToUpdate.getName());
         addressTextField.setText(customerToUpdate.getAddress());
         postalCodeTextField.setText(customerToUpdate.getPostalCode());
         phoneNumberTextField.setText(customerToUpdate.getPhoneNumber());
-        comboCountry.setValue(Country.getCountryById(fldUser));
         comboCity.setValue(fldUser);
 
     }
 
-    public void onComboBox1(ActionEvent actionEvent) {
+    public void onComboBox1(ActionEvent actionEvent) throws SQLException {
         comboCountrySelection.add((Country) comboCountry.getValue());
         if (comboCountrySelection.size() > 1) {
             comboCountrySelection.remove(0);
             dataForCountry.clear();
         }
         countrySelected = comboCountrySelection.get(0);
-        for (FirstLevelDivision f : allFirstLevelDivision) {
+        for (FirstLevelDivision f : FirstLevelDivisionQuery.getFirstLevelDivisionFromDB()) {
             if (countrySelected.getCountryId() == f.getCountryId()) {
                 dataForCountry.add(f);
             }
@@ -77,8 +81,6 @@ public class UpdateCustomer implements Initializable {
             String phone = phoneNumberTextField.getText();
             FirstLevelDivision fld = (FirstLevelDivision) comboCity.getValue();
             int divId = fld.getDivId();
-            Customer customerToUpdate = new Customer(id, customerName, address, postalCode, phone, divId);
-            Customer.updateCustomer(id - 1, customerToUpdate);
             CustomerQuery.update(id, customerName, address, postalCode, phone, divId);
             returnToMain(actionEvent);
         } catch (Exception e) {

@@ -129,6 +129,11 @@ public class Appointment {
         }
     }
 
+    /**
+     * Deletes appointment from the program
+     * @param appointmentToDelete
+     * @return boolean
+     */
     public static boolean deleteAppointment(Appointment appointmentToDelete) {
         if(allAppointments.contains(appointmentToDelete)) {
             allAppointments.remove(appointmentToDelete);
@@ -137,6 +142,15 @@ public class Appointment {
             return false;
         }
 
+    }
+
+    /**
+     * Update an appointment within the program
+     * @param id
+     * @param appointmentToUpdate
+     */
+    public static void updateAppointment(int id, Appointment appointmentToUpdate) {
+        allAppointments.set(id, appointmentToUpdate);
     }
 
 

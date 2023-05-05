@@ -10,6 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class UserQuery {
+    /**
+     * Gets all users from the database
+     * @return all users from the database
+     * @throws SQLException
+     */
     public static ObservableList<User> getUserFromDB() throws SQLException {
         String sql = "SELECT * FROM USERS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

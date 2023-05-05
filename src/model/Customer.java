@@ -74,28 +74,9 @@ public class Customer {
         this.divisionId = divisionId;
     }
 
-    public static ObservableList<Customer> allCustomers;
 
-    static {
-        try {
-            allCustomers = CustomerQuery.getCustomerFromDB();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static ObservableList<Customer> getAllCustomers() {
-        return allCustomers;
-    }
-    public static void addCustomer(Customer customer){allCustomers.add(customer);}
-    public static boolean deleteCustomer(Customer customerToDelete) {
-        if(allCustomers.contains(customerToDelete)) {
-            allCustomers.remove(customerToDelete);
-            return true;
-        } else {
-            return false;
-        }
 
-    }
+
 
     public String toString() {
         return Integer.toString(id);

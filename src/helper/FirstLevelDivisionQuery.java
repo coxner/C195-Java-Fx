@@ -9,6 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class FirstLevelDivisionQuery {
+    /**
+     * Get all first level divisions from the database
+     * @return get all first level division from the database
+     * @throws SQLException
+     */
     public static ObservableList<FirstLevelDivision> getFirstLevelDivisionFromDB() throws SQLException {
         String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

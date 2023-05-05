@@ -11,6 +11,10 @@ public class Country {
     private int countryId;
     private String country;
 
+    public Country() {
+
+    }
+
     public int getCountryId() {
         return countryId;
     }
@@ -32,26 +36,14 @@ public class Country {
         this.country = country;
     }
 
-    public Country() {}
 
-    public static ObservableList<Country> allCountries;
-
-    static {
-        try {
-            allCountries = CountryQuery.getCountryFromDB();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static ObservableList<Country> getAllCountries() {
-        return allCountries;
-    }
-
-    private static ObservableList<FirstLevelDivision> associatedFLD = FXCollections.observableArrayList();
-
-
-    public static Country getCountryById(FirstLevelDivision fld) {
-        for (Country c : allCountries) {
+    /**
+     * Get a country by its id
+     * @param fld
+     * @return country matching id
+     */
+    public static Country getCountryById(FirstLevelDivision fld) throws SQLException {
+        for (Country c : CountryQuery.getCountryFromDB()) {
             if (c.getCountryId() == fld.getCountryId()) {
                 return c;
             }
@@ -63,7 +55,6 @@ public class Country {
     public String toString() {
         return (country);
     }
-
 
     }
 

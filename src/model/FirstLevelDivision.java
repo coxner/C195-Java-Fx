@@ -45,21 +45,17 @@ public class FirstLevelDivision {
         this.countryId = country_id;
     }
 
-    public static ObservableList<FirstLevelDivision> allFirstLvlDiv;
 
-    static {
-        try {
-            allFirstLvlDiv = FirstLevelDivisionQuery.getFirstLevelDivisionFromDB();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static ObservableList<FirstLevelDivision> getAllFirstLvlDiv() {
-        return allFirstLvlDiv;
-    }
 
-    public static FirstLevelDivision getFirstLevelById(int id) {
-        for (FirstLevelDivision f : allFirstLvlDiv) {
+
+
+    /**
+     * Get a first level division by its id
+     * @param id
+     * @return first level division matching id
+     */
+    public static FirstLevelDivision getFirstLevelById(int id) throws SQLException {
+        for (FirstLevelDivision f : FirstLevelDivisionQuery.getFirstLevelDivisionFromDB()) {
             if (f.getDivId() == id)
                 return f;
         }

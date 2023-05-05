@@ -12,13 +12,6 @@ public class User {
     private String password;
     static ObservableList<User> allUsers;
 
-    static {
-        try {
-            allUsers = UserQuery.getUserFromDB();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static ObservableList<User> getAllUsers() {
         return allUsers;
@@ -58,8 +51,14 @@ public class User {
         this.password = password;
     }
 
-    public static boolean verifyUser(String userName, String password) {
-        for (User user : allUsers) {
+    /**
+     * Verify that the username and password user enters are valid
+     * @param userName
+     * @param password
+     * @return boolean
+     */
+    public static boolean verifyUser(String userName, String password) throws SQLException {
+        for (User user : UserQuery.getUserFromDB()) {
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)){
                 return true;
             }

@@ -62,7 +62,7 @@
                   <Label text="Start Time" GridPane.rowIndex="7" />
                   <Label text="End Time" GridPane.rowIndex="9" />
                   <ComboBox fx:id="apptEndTimeComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <ComboBox fx:id="apptStartTimeComboBox" onAction="#setStartTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <ComboBox fx:id="apptStartTimeComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                </children>
                <padding>
                   <Insets left="10.0" />

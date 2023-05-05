@@ -10,6 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class ContactQuery {
+    /**
+     * Gets contact list from the database
+     * @return contact list from database
+     * @throws SQLException
+     */
     public static ObservableList<Contact> getContactFromDB() throws SQLException {
         String sql = "SELECT * FROM CONTACTS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

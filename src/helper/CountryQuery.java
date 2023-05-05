@@ -10,6 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class CountryQuery {
+    /**
+     * Gets all the countries from the database
+     * @return full list of contacts from database
+     * @throws SQLException
+     */
     public static ObservableList<Country> getCountryFromDB() throws SQLException {
         String sql = "SELECT * FROM COUNTRIES";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

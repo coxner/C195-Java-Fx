@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ResultsController">
+   <children>
+      <TableView fx:id="resultsTable" layoutX="15.0" layoutY="43.0" prefHeight="260.0" prefWidth="805.0">
+        <columns>
+          <TableColumn fx:id="colOne" prefWidth="115.0" />
+          <TableColumn fx:id="colTwo" prefWidth="115.0" />
+            <TableColumn fx:id="colThree" prefWidth="115.0" />
+            <TableColumn fx:id="colFour" prefWidth="115.0" />
+            <TableColumn fx:id="colFive" prefWidth="115.0" />
+            <TableColumn fx:id="colSix" prefWidth="115.0" />
+            <TableColumn fx:id="colSeven" prefWidth="115.0" />
+        </columns>
+      </TableView>
+      <Button layoutX="724.0" layoutY="330.0" mnemonicParsing="false" onAction="#returnToMain" text="Return to Main" />
+   </children>
+</AnchorPane>

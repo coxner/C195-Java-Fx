@@ -3,23 +3,26 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="739.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<AnchorPane prefHeight="795.0" prefWidth="1002.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <TableView fx:id="customerTable" layoutX="24.0" layoutY="74.0" prefHeight="230.0" prefWidth="400.0">
+      <TableView fx:id="customerTable" layoutX="24.0" layoutY="74.0" prefHeight="230.0" prefWidth="550.0">
         <columns>
-          <TableColumn fx:id="customerIdCol" text="ID" />
-          <TableColumn fx:id="customerNameCol" text="Name" />
-            <TableColumn fx:id="customerAddressCol" text="Address" />
-            <TableColumn fx:id="customerPostalCodeCol" text="Postal Code" />
-            <TableColumn fx:id="customerPhoneCol" text="Phone" />
+          <TableColumn fx:id="customerIdCol" prefWidth="110.0" text="ID" />
+          <TableColumn fx:id="customerNameCol" prefWidth="110.0" text="Name" />
+            <TableColumn fx:id="customerAddressCol" prefWidth="110.0" text="Address" />
+            <TableColumn fx:id="customerPostalCodeCol" prefWidth="110.0" text="Postal Code" />
+            <TableColumn fx:id="customerPhoneCol" prefWidth="110.0" text="Phone" />
         </columns>
       </TableView>
-      <HBox alignment="TOP_RIGHT" layoutX="24.0" layoutY="312.0" prefHeight="50.0" prefWidth="400.0" spacing="10.0">
+      <HBox alignment="TOP_RIGHT" layoutX="24.0" layoutY="312.0" prefHeight="50.0" prefWidth="485.0" spacing="10.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onClickAddCustomer" text="Add" />
             <Button mnemonicParsing="false" onAction="#onClickUpdateCustomer" text="Update" />
@@ -30,15 +33,17 @@
          </padding>
       </HBox>
       <Label layoutX="24.0" layoutY="41.0" text="Customers" />
-      <HBox layoutX="488.0" layoutY="74.0" prefHeight="230.0" prefWidth="200.0" />
-      <TableView fx:id="appointmentTable" layoutX="27.0" layoutY="408.0" prefHeight="200.0" prefWidth="680.0">
+      <TableView fx:id="appointmentTable" layoutX="27.0" layoutY="408.0" prefHeight="200.0" prefWidth="900.0">
         <columns>
-          <TableColumn fx:id="apptIdCol" prefWidth="112.0" text="Appointment ID" />
-          <TableColumn fx:id="apptCustomerIdCol" prefWidth="113.0" text="Customer ID" />
-            <TableColumn fx:id="apptTitle" minWidth="0.0" prefWidth="130.0" text="Title" />
-            <TableColumn fx:id="apptLocationCol" prefWidth="60.0" text="Location" />
-            <TableColumn fx:id="apptStartDate" prefWidth="89.0" text="Start Date" />
-            <TableColumn fx:id="apptEndDate" prefWidth="141.0" text="End Date" />
+          <TableColumn fx:id="apptIdCol" prefWidth="150.0" text="Appointment ID" />
+          <TableColumn fx:id="apptCustomerIdCol" prefWidth="100.0" text="Customer ID" />
+            <TableColumn fx:id="apptUserIdCol" prefWidth="50.0" text="User ID" />
+            <TableColumn fx:id="apptContactCol" prefWidth="75.0" text="Contact" />
+            <TableColumn fx:id="apptTitle" minWidth="0.0" prefWidth="50.0" text="Title" />
+            <TableColumn fx:id="apptDescriptionCol" prefWidth="100.0" text="Description" />
+            <TableColumn fx:id="apptLocationCol" prefWidth="75.0" text="Location" />
+            <TableColumn fx:id="apptStartDate" minWidth="0.0" prefWidth="150.0" text="Start Date" />
+            <TableColumn fx:id="apptEndDate" prefWidth="150.0" text="End Date" />
         </columns>
       </TableView>
       <Label layoutX="27.0" layoutY="379.0" text="Appointments" />
@@ -52,5 +57,38 @@
             <Insets right="15.0" top="10.0" />
          </padding>
       </HBox>
+      <RadioButton layoutX="578.0" layoutY="379.0" mnemonicParsing="false" onAction="#apptByMonthRtbn" text="Appointments this month">
+         <toggleGroup>
+            <ToggleGroup fx:id="ApptSelect" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="400.0" layoutY="379.0" mnemonicParsing="false" onAction="#apptByWeekRtbn" text="Appointments this week" toggleGroup="$ApptSelect" />
+      <RadioButton fx:id="allApptsBtn" layoutX="256.0" layoutY="379.0" mnemonicParsing="false" onAction="#allApptsBtn" text="All Appointments" toggleGroup="$ApptSelect" />
+      <Label layoutX="624.0" layoutY="50.0" text="Reports" />
+      <VBox alignment="TOP_CENTER" layoutX="605.0" layoutY="75.0" prefHeight="238.0" prefWidth="274.0" spacing="15.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="35.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#countApptByType" prefHeight="50.0" prefWidth="100.0" text="Appt By Type" />
+                  <Button mnemonicParsing="false" onAction="#onViewMonth" prefHeight="50.0" prefWidth="100.0" text="Appt By Month" />
+               </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </HBox>
+            <Label alignment="TOP_LEFT" text="View Schedules for each Contact" />
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="274.0" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#contactIdOne" text="Anika Costa" />
+                  <Button mnemonicParsing="false" onAction="#contactIdTwo" text="Daniel Garcia" />
+                  <Button mnemonicParsing="false" onAction="#contactIdThree" text="Li Lee" />
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" onAction="#viewCountryCount" text="View Countries State/ Provinces" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

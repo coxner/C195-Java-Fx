@@ -11,6 +11,11 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public abstract class AppointmentQuery {
+    /**
+     * Gets all the appointments from the database
+     * @return a list of all appointments in database
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getAppointmentFromDB() throws SQLException {
         String sql = "SELECT * FROM APPOINTMENTS";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -32,28 +37,83 @@ public abstract class AppointmentQuery {
         }
         return apptList;
     }
-    public static int insert(int id, String title, String description, String location, String type, LocalDateTime startDate, LocalDateTime endDate,
+
+    /**
+     * Insert a appointment into the database
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param startDate
+     * @param endDate
+     * @param customerId
+     * @param userId
+     * @param contactId
+     * @return rows affected
+     * @throws SQLException
+     */
+    public static int insert( String title, String description, String location, String type, LocalDateTime startDate, LocalDateTime endDate,
                              int customerId, int userId, int contactId) throws SQLException {
-        String sql = "INSERT INTO APPOINTMENTS (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ps.setString(2, title);
-        ps.setString(3, description);
-        ps.setString(4, location);
-        ps.setString(5, type);
-        ps.setTimestamp(6, Timestamp.valueOf(startDate));
-        ps.setTimestamp(7, Timestamp.valueOf(endDate));
-        ps.setInt(8, customerId);
-        ps.setInt(9, userId);
-        ps.setInt(10, contactId);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, Timestamp.valueOf(startDate));
+        ps.setTimestamp(6, Timestamp.valueOf(endDate));
+        ps.setInt(7, customerId);
+        ps.setInt(8, userId);
+        ps.setInt(9, contactId);
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+
+    /**
+     * Delete an appointment from the database
+     * @param id
+     * @return rows affected
+     * @throws SQLException
+     */
     public static int deleteAppointment(int id) throws SQLException {
         String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, id);
         int rowsAffect = ps.executeUpdate();
         return rowsAffect;
+    }
+
+    /**
+     * Updates a appointment in the database
+     * @param id
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param startDate
+     * @param endDate
+     * @param customerId
+     * @param userId
+     * @param contactId
+     * @return rows affected
+     * @throws SQLException
+     */
+    public static int update(int id, String title, String description, String location, String type, LocalDateTime startDate, LocalDateTime endDate,
+                             int customerId, int userId, int contactId) throws SQLException {
+        String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_id = ?" +
+                " WHERE Appointment_ID = ? ";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, Timestamp.valueOf(startDate));
+        ps.setTimestamp(6, Timestamp.valueOf(endDate));
+        ps.setInt(7, customerId);
+        ps.setInt(8, userId);
+        ps.setInt(9, contactId);
+        ps.setInt(10, id);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
     }
 }

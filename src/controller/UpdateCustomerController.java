@@ -1,5 +1,6 @@
 package controller;
 
+import helper.CustomerQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
+import model.Error;
 import model.FirstLevelDivision;
 
 import java.io.IOException;
@@ -34,6 +36,7 @@ public class UpdateCustomer implements Initializable {
     ObservableList<Country> allCountries = Country.getAllCountries();
     ObservableList<FirstLevelDivision> allFirstLevelDivision = FirstLevelDivision.getAllFirstLvlDiv();
     ObservableList<FirstLevelDivision> dataForCountry = FXCollections.observableArrayList();
+    ObservableList<Country> comboCountrySelection = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,7 +54,12 @@ public class UpdateCustomer implements Initializable {
     }
 
     public void onComboBox1(ActionEvent actionEvent) {
-        countrySelected = Country.getCountryById(fldUser);
+        comboCountrySelection.add((Country) comboCountry.getValue());
+        if (comboCountrySelection.size() > 1) {
+            comboCountrySelection.remove(0);
+            dataForCountry.clear();
+        }
+        countrySelected = comboCountrySelection.get(0);
         for (FirstLevelDivision f : allFirstLevelDivision) {
             if (countrySelected.getCountryId() == f.getCountryId()) {
                 dataForCountry.add(f);
@@ -60,10 +68,23 @@ public class UpdateCustomer implements Initializable {
         comboCity.setItems(dataForCountry);
     }
 
-    public void comboBox2(ActionEvent actionEvent) {
-    }
-
     public void onUpdateCustomer(ActionEvent actionEvent) {
+        try {
+            int id = Integer.parseInt(IdTextField.getText());
+            String customerName = nameTextField.getText();
+            String address = addressTextField.getText();
+            String postalCode = postalCodeTextField.getText();
+            String phone = phoneNumberTextField.getText();
+            FirstLevelDivision fld = (FirstLevelDivision) comboCity.getValue();
+            int divId = fld.getDivId();
+            Customer customerToUpdate = new Customer(id, customerName, address, postalCode, phone, divId);
+            Customer.updateCustomer(id - 1, customerToUpdate);
+            CustomerQuery.update(id, customerName, address, postalCode, phone, divId);
+            returnToMain(actionEvent);
+        } catch (Exception e) {
+            //Error.errorAlert("Error", "Empty Text Fields", "Cannot have empty text fields");
+            System.out.println(e);
+        }
     }
 
     public void onCancelCustomer(ActionEvent actionEvent) throws IOException {
@@ -75,6 +96,13 @@ public class UpdateCustomer implements Initializable {
             this.stage.setScene(new Scene(this.scene));
             this.stage.show();
         }
+    }
+
+    private void returnToMain(ActionEvent actionEvent) throws IOException {
+        this.stage = (Stage)((Button)actionEvent.getSource()).getScene().getWindow();
+        this.scene = FXMLLoader.load(this.getClass().getResource("/view/main.fxml"));
+        this.stage.setScene(new Scene(this.scene));
+        this.stage.show();
     }
 
 
